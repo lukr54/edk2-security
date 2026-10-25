@@ -1,8 +1,8 @@
 # EDK2 BrotliCustomDecompressLib — security findings
 
-Status (2026-10-25): **Finding A CONFIRMED** (n-day); **Finding B strong candidate** (pending
-core-caller confirmation + dynamic ASAN proof). Defensive research, for coordinated disclosure
-to TianoCore/EDK2.
+Status (2026-10-25): **Finding A CONFIRMED** (n-day, DUP); **Finding B CONFIRMED** (novel,
+ASAN-proven heap-buffer-overflow). Defensive research, for coordinated disclosure to
+TianoCore/EDK2.
 
 Target: `tianocore/edk2`, `MdeModulePkg/Library/BrotliCustomDecompressLib` + the MdePkg decompress
 libs. Why it matters: EDK2 is the open UEFI reference that AMI/Insyde/Phoenix build on;
@@ -48,10 +48,9 @@ e.g. header `0x1_0000_0040` -> 64-byte buffer) and ship a stream that decompress
 writes past `OutputBuffer`. In EDK2's own code, not upstream brotli -> not covered by brotli's
 OSS-Fuzz; EDK2 ships no in-tree fuzzing (confirmed: no `*Fuzz*` files in the tree).
 
-Status: strong candidate, confirmed by reading the glue + the GUIDed-section handlers. **Not yet
-confirmed:** (1) the core `ExtractGuidedSectionDecode` caller allocates `OutputBuffer` straight from
-GetInfo's size with no outer bound; (2) dynamic ASAN proof (harness `BrotliUefiDecompress`, feed a
-size-lying Brotli section); (3) prior-art check against EDK2 security advisories.
+Status: **CONFIRMED (2026-10-25).** ASAN proof in `harness/`: a 4096-byte Brotli stream declared as
+64 bytes overflows the heap by 4032 bytes at the final-flush `CopyMem` (BrotliDecompress.c:156).
+Stack trace: `memcpy → BrotliDecompressInternal → BrotliUefiDecompress`. See `harness/asan_output.txt`.
 
 ### Finding B — prior art (checked 2026-10-25)
 - No public CVE/advisory names the Brotli glue bug (CVE/NVD/web search).

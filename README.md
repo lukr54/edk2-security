@@ -7,7 +7,7 @@ Defensive security research for coordinated disclosure to TianoCore/EDK2.
 | Finding | Class | Status | Disposition |
 |---------|-------|--------|-------------|
 | A — Vendored Brotli CVE-2026-111497 | n-day | Confirmed | **DUP** — independently reported as edk2 #13378 (2026-10-24). Dropped. |
-| B — Glue heap overflow (UINT64→UINT32 truncation + unbounded decompress) | Novel | Read-confirmed | **Unreported + unfixed** in all public channels. ASAN proof pending. |
+| B — Glue heap overflow (UINT64→UINT32 truncation + unbounded decompress) | Novel | **ASAN-confirmed** | **Unreported + unfixed** in all public channels. 4032-byte heap overflow proven. |
 
 ## Finding B — the real finding
 
@@ -31,6 +31,9 @@ evidence/
   BrotliDecompress.c     Vulnerable glue (BrotliDecompressInternal + GetInfo)
   GuidedSectionExtraction.c   GUIDed section handler that calls the glue
   BaseUefiDecompressLib.c     Tiano/UEFI decompress (safe — output-bounded; control)
+harness/
+  edk2_brotli_overflow_poc.c  Standalone ASAN proof-of-concept (userspace, links libbrotli)
+  asan_output.txt             ASAN output showing heap-buffer-overflow
 ```
 
 ## Disclosure
