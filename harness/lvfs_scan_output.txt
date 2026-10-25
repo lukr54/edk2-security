@@ -1,0 +1,231 @@
+Parsing firmware.xml...
+Found 3371 UEFI firmware entries in LVFS metadata
+Scanning 200 firmware images (deduped, size-filtered)
+
+Vendors in scan:
+  Dell: 167
+  Adlink: 16
+  Acer: 6
+  Asus: 4
+  ASRock Industrial: 3
+  libretrend: 1
+  AAEON: 1
+  AMD: 1
+  CompuLab: 1
+
+  [1/200] Acer/Aspire A315-55/Aspire A315-55G                           lzma
+  [2/200] Acer/Aspire A515-53/Aspire A515-53G                           lzma
+  [3/200] libretrend/LT1000 Coreboot                                    none
+  [4/200] AAEON/PCM-CFS                                                 lzma
+  [5/200] Acer/Veriton GN100 fused                                      none
+  [6/200] Acer/Veriton GN100 SoC FW                                     none
+  [7/200] Acer/Veriton GN100 TPM FW FW                                  none
+  [8/200] Acer/Veriton GN100 USB-C PD FW                                none
+  [9/200] Adlink/COM-HPC-cRLS                                           lzma
+  [10/200] Adlink/COM-HPC-mMTL                                           lzma
+  [11/200] Adlink/COM-HPC-mPTL                                           lzma
+  [12/200] Adlink/Express-PTL-R3.1                                       lzma
+  [13/200] Adlink/Express-VR7                                            lzma
+  [14/200] Adlink/MT2-MT                                                 lzma
+  [15/200] Adlink/Peacock-BK                                             lzma
+  [16/200] Adlink/Q7-EL                                                  lzma
+  [17/200] Adlink/cExpress-ALN                                           lzma
+  [18/200] Adlink/cExpress-AR                                            lzma
+  [19/200] Adlink/cExpress-EL                                            lzma
+  [20/200] Adlink/cExpress-KL-LT2                                        lzma
+  [21/200] Adlink/cExpress-MTL                                           lzma
+  [22/200] Adlink/                                                       lzma
+  [23/200] Adlink/cExpress-RLP-R3.1                                      lzma
+  [24/200] Adlink/cExpress-WL                                            lzma
+  [25/200] AMD/Desktop Ryzen AI MAX 300                                  lzma
+  [26/200] ASRock Industrial/iEP-7020E                                   lzma
+  [27/200] ASRock Industrial/NUC-ADL-N                                   lzma
+  [28/200] ASRock Industrial/NUC-EHL                                     lzma
+  [29/200] Asus/GX10                                                     none
+  [30/200] Asus/GX10 SoC FW                                              none
+  [31/200] Asus/GX10 TPM FW FW                                           none
+  [32/200] Asus/GX10 USB-C PD FW                                         none
+  [33/200] CompuLab/flt2                                                 none
+  [34/200] Dell/Precision 5520                                           lzma
+  [35/200] Dell/Precision 5530                                           lzma
+  [36/200] Dell/Precision 5540                                           none
+  [37/200] Dell/Precision 7560,Precision 7760                            lzma
+  [38/200] Dell/XPS 13 9310                                              lzma
+  [39/200] Dell/Camera                                                   none
+  [40/200] Dell/Precision 7530 Thunderbolt                               none
+  [41/200] Dell/ Pro 13 Plus PB13255,Pro 14 Plus PB14255,Pro 16 Plus...  none
+  [42/200] Dell/Latitude 5330,Latitude 5330                              lzma
+  [43/200] Dell/OptiPlex 7760_7460 AIO                                   lzma
+  [44/200] Dell/Pro Tower Essential QVT1260/ Pro Slim Essential QVS1260  lzma
+  [45/200] Dell/G15 5511                                                 lzma
+  [46/200] Dell/OptiPlex 5480 AIO - China HDD Protection                 lzma
+  [47/200] Dell/Pro 24 All-in-One QC24251 - China HDD Protection         lzma
+  [48/200] Dell/Precision 3240 Compact                                   lzma
+  [49/200] Dell/Vostro 3670                                              lzma
+  [50/200] Dell/OptiPlex 5490 AIO                                        lzma
+  [51/200] Dell/G5 5587/G7 7588/Vostro 7580                              lzma
+  [52/200] Dell/Latitude 5431, Precision 3470                            lzma
+  [53/200] Dell/Latitude 3440,Latitude 3540                              lzma
+  [54/200] Dell/Pro 24 All-in-One QC24251                                lzma
+  [55/200] Dell/Pro 24 All-in-One Plus QB24250/ Pro 24 All-in-One QC...  lzma
+  [56/200] Dell/OptiPlex 3050                                            lzma
+  [57/200] Dell/OptiPlex 5270 AIO                                        none
+  [58/200] Dell/Pro Max with GB10 FCM1253 TPM FW FW                      none
+  [59/200] Dell/Latitude 5X01/Precision 3541                             lzma
+  [60/200] Dell/Pro 3 14 P314260/ Pro 3 16 P316260/ Pro 5 14 P514260...  lzma
+  [61/200] Dell/Latitude 7230 Rugged Extreme Tablet                      lzma
+  [62/200] Dell/Latitude 3120                                            lzma
+  [63/200] Dell/OptiPlex 7050                                            lzma
+  [64/200] Dell/OptiPlex 3080                                            lzma
+  [65/200] Dell/XPS 15 9550/Precision 5510                               lzma
+  [66/200] Dell/Precision 5510                                           lzma
+  [67/200] Dell/Latitude 9410                                            lzma
+  [68/200] Dell/OptiPlex 5050                                            lzma
+  [69/200] Dell/Inspiron 15 3511, Vostro 15 3510                         lzma
+  [70/200] Dell/Latitude 9510                                            lzma
+  [71/200] Dell/OptiPlex 5080 HDP                                        lzma
+  [72/200] Dell/OptiPlex AIO Plus 7410-China HDD Protection, OptiPle...  lzma
+  [73/200] Dell/Inspiron 14 7000 Gaming/Inspiron 15 7000 Gaming          lzma
+  [74/200] Dell/OptiPlex 5055 Ryzen APU                                  none
+  [75/200] Dell/Vostro 14-3468                                           lzma
+  [76/200] Dell/D14261_D15261_PV14261_PV15261                            lzma
+  [77/200] Dell/Vostro 3470, Inspiron 3470                               lzma
+  [78/200] Dell/Precision 3650 Tower                                     lzma
+  [79/200] Dell/Latitude 3390 2-in-1                                     lzma
+  [80/200] Dell/XPS 13 9350/XPS 13 9350                                  lzma
+  [81/200] Dell/Precision 3260, Precision 3460                           lzma
+  [82/200] Dell/OptiPlex Tower Plus 7010-China HDD Protection,OptiPl...  lzma
+  [83/200] Dell/OptiPlex 5260 AIO                                        lzma
+  [84/200] Dell/OptiPlex 5260 AIO-China HDD Protection                   lzma
+  [85/200] Dell/OptiPlex 5260 AIO - China HDD Protection                 lzma
+  [86/200] Dell/Insprion/Vostro 3X82                                     none
+  [87/200] Dell/OptiPlex 7490 AIO-China HDD Protection                   lzma
+  [88/200] Dell/Pro P51x265, P31x265                                     none
+  [89/200] Dell/Latitude 5520                                            lzma
+  [90/200] Dell/Inspiron 14-3467                                         lzma
+  [91/200] Dell/Pro Max 14/Pro Max 16                                    lzma
+  [92/200] Dell/OptiPlex 3280 AIO                                        lzma
+  [93/200] Dell/Pro Rugged 10 Tablet RA00260/ Pro Rugged 12 Tablet R...  lzma
+  [94/200] Dell/Latitude 3310                                            lzma
+  [95/200] Dell/Latitude E7X70                                           lzma
+  [96/200] Dell/Edge Gateway 3000/3001/3002/3003                         lzma
+  [97/200] Dell/Precision Tower 3420                                     none
+  [98/200] Dell/Precision 7875 Tower                                     none
+  [99/200] Dell/OptiPlex Tower 7020-China HDD Protection,OptiPlex Mi...  lzma
+  [100/200] Dell/Latitude 5540,Precision 3580                             lzma
+  [101/200] Dell/Tower Plus EBT2250                                       lzma
+  [102/200] Dell/OptiPlex 7071                                            none
+  [103/200] Dell/Latitude 3500, Latitude 3400                             none
+  [104/200] Dell/Precision Tower 3431                                     none
+  [105/200] Dell/OptiPlex 5090-China HDD Protection                       lzma
+  [106/200] Dell/OptiPlex 3050                                            lzma
+  [107/200] Dell/Vostro 3030-China HDD Protection, Vostro 3030S-China...  lzma
+  [108/200] Dell/Precision 7680, Precision 7780                           lzma
+  [109/200] Dell/XPS 14 DA14260                                           lzma
+  [110/200] Dell/atitude 3301                                             lzma
+  [111/200] Dell/Latitude 3330                                            lzma
+  [112/200] Dell/Precision 5860 Tower                                     lzma
+  [113/200] Dell/Latitude 9520                                            lzma
+  [114/200] Dell/Inspiron 5583, Inspiron 5584                             none
+  [115/200] Dell/XPS 13 9350                                              lzma
+  [116/200] Dell/OptiPlex 5060 HDP                                        lzma
+  [117/200] Dell/XPS 15 9560/Precision 5520                               lzma
+  [118/200] Dell/Pro Tower QCT1250/ Pro Micro QCM1250/ Pro Slim QCS1250   lzma
+  [119/200] Dell/OptiPlex 7770_7470 AIO                                   lzma
+  [120/200] Dell/OptiPlex 7770_7470 AIO-China HDD Protection              lzma
+  [121/200] Dell/Pro Max Micro FCM2250 - China HDD Protection/ Pro Ma...  lzma
+  [122/200] Dell/DC15250                                                  lzma
+  [123/200] Dell/XPS 8940                                                 lzma
+  [124/200] Dell/Vostro 5890                                              lzma
+  [125/200] Dell/Latitude 5X00/Precision 3540                             lzma
+  [126/200] Dell/Inspiron 3910-China HDD Protection                       lzma
+  [127/200] Dell/Alienware 16 Aurora AC16250                              lzma
+  [128/200] Dell/OptiPlex 7090                                            lzma
+  [129/200] Dell/XPS 15 9520, Precision 5570                              lzma
+  [130/200] Dell/ChengMing 3900-China HDD Protection, ChengMing 3901-...  lzma
+  [131/200] Dell/OptiPlex AIO Plus 7420, OptiPlex AIO 7420 65W, OptiP...  lzma
+  [132/200] Dell/XPS 13 9305                                              lzma
+  [133/200] Dell/Inspiron 3585 3785                                       lzma
+  [134/200] Dell/Inspiron 15 3515,Vostro 3515                             lzma
+  [135/200] Dell/OptiPlex 7450 AIO                                        lzma
+  [136/200] Dell/Latitude 5450                                            lzma
+  [137/200] Dell/Latitude 7440, Latitude 7440, Latitude 7440, Latitud...  lzma
+  [138/200] Dell/Latitude 5550,Precision 3590,Precision 3591              lzma
+  [139/200] Dell/Pro Rugged 14 RB14250                                    lzma
+  [140/200] Dell/Latitude 3420, Latitude 3520                             none
+  [141/200] Dell/Latitude 5550                                            lzma
+  [142/200] Dell/OptiPlex 5250 AIO - China HDD Protection                 lzma
+  [143/200] Dell/OptiPlex 7090 UFF                                        lzma
+  [144/200] Dell/XPS 15 7590/Precision 5540                               none
+  [145/200] Dell/OptiPlex 3000-China HDD Protection                       lzma
+  [146/200] Dell/OptiPlex 7440 AIO                                        lzma
+  [147/200] Dell/Inspiron 5493,Inspiron 5593,Inspiron 3493,Inspiron 3...  lzma
+  [148/200] Dell/Inspiron 14 5420,Inspiron 16 5620,Vostro 5620            ERR: extract failed: Command '['curl', '-sL', '-o', './cabs/f6fcfb6c6b54d3b4f96c391e669afafcdfd8463a26fc28a3df87f5b89abcbe69-Odin1416Adl_16.1_SQS_firmware.cab', 'https://fwupd.org/downloads/f6fcfb6c6b54d3b4f96c391e669afafcdfd8463a26fc28a3df87f5b89abcbe69-Odin1416Adl_16.1_SQS_firmware.cab']' returned non-zero exit status 92.
+  [149/200] Dell/Latitude 9330                                            lzma
+  [150/200] Dell/Tower ECT1250/ Slim ECS1250                              lzma
+  [151/200] Dell/OptiPlex 5080                                            lzma
+  [152/200] Dell/ChengMing 3967                                           none
+  [153/200] Dell/Precision Tower 3430                                     lzma
+  [154/200] Dell/Latitude 5X91                                            lzma
+  [155/200] Dell/XPS 13 9360                                              lzma
+  [156/200] Dell/G15 5510                                                 lzma
+  [157/200] Dell/Latitude 5X80                                            lzma
+  [158/200] Dell/Latitude 9450 2-in-1                                     lzma
+  [159/200] Dell/OptiPlex Tower 7010, OptiPlex Micro 7010, OptiPlex S...  lzma
+  [160/200] Dell/Inspiron 3020,Inspiron 3020 S                            lzma
+  [161/200] Dell/OptiPlex 3060 HDP                                        none
+  [162/200] Dell/Precision 3640 Tower - China HDD Protection              none
+  [163/200] Dell/TPM 1.2                                                  none
+  [164/200] Dell/Latitude 7450                                            lzma
+  [165/200] Dell/Vostro 3890, Vostro 3690                                 lzma
+  [166/200] Dell/OptiPlex 5270 AIO-China HDD Protection                   lzma
+  [167/200] Dell/Latitude 7370                                            none
+  [168/200] Dell/Latitude 7X80                                            none
+  [169/200] Dell/XPS 9315                                                 lzma
+  [170/200] Dell/Vostro 3400, Inspiron 3501, Vostro 3500                  lzma
+  [171/200] Dell/OptiPlex 7000-China HDD Protection,OptiPlex XE4-Chin...  lzma
+  [172/200] Dell/Latitude 3X90                                            none
+  [173/200] Dell/OptiPlex 3070                                            lzma
+  [174/200] Dell/Precision 5550                                           lzma
+  [175/200] Dell/Latitude 5530                                            lzma
+  [176/200] Dell/Latitude 5310                                            lzma
+  [177/200] Dell/OptiPlex 3000 Thin Client                                lzma
+  [178/200] Dell/Pro Max 14 Premium MA14250/ Pro Max 16 Premium MA16250   lzma
+  [179/200] Dell/OptiPlex Tower Plus 7010, OptiPlex Micro Plus 7010, ...  lzma
+  [180/200] Dell/Latitude 7350                                            lzma
+  [181/200] Dell/Latitude 5350,Latitude 5350                              lzma
+  [182/200] Dell/Precision E7X10                                          lzma
+  [183/200] Dell/Latitude 9420, Latitude 9420                             lzma
+  [184/200] Dell/Pro Precision 7 14 PW714260/ Pro Precision 7 16 PW71...  lzma
+  [185/200] Dell/Pro Max 16 MC16255                                       none
+  [186/200] Dell/Inspiron 7460                                            lzma
+  [187/200] Dell/15 D15260                                                lzma
+  [188/200] Dell/OptiPlex Tower Plus 7020-China HDD Protection,OptiPl...  lzma
+  [189/200] Dell/Pro Precision 7 T1 PW7T1260                              lzma
+  [190/200] Dell/Pro Rugged 13 RA13250                                    lzma
+  [191/200] Dell/OptiPlex 3060                                            none
+  [192/200] Dell/Wyse 3040                                                lzma
+  [193/200] Dell/Latitude 7390 2-in-1                                     none
+  [194/200] Dell/Latitude E5X60                                           lzma
+  [195/200] Dell/Tower ECT1250/Slim ECS1250                               lzma
+  [196/200] Dell/Precision 3260-China HDD Protection                      lzma
+  [197/200] Dell/G3 3500, G5 5500                                         none
+  [198/200] Dell/Inspiron 15 3505,Vostro 3505                             lzma
+  [199/200] Dell/27 All-in-One EC27250,24 All-in-One EC24250              lzma
+  [200/200] Dell/Latitude 3310 2in1                                       lzma
+
+======================================================================
+SCAN COMPLETE: 200 firmware images scanned, 1 errors
+  LZMA GUIDed sections found in: 161 images
+  Brotli GUIDed sections found in: 0 images
+
+NO BROTLI HITS — the Brotli decompressor appears unused in
+shipping firmware.  Blast radius for Finding B is NARROW:
+the vulnerable code is present in the EDK2 tree but not
+exercised by any firmware image in LVFS.
+
+Control: LZMA was found in 161/200 images,
+confirming the scanner works and firmware does use GUIDed
+section compression — just not Brotli.
+
+[exited with code 0]

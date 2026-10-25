@@ -23,10 +23,17 @@ This is the overlooked Brotli sibling of **CVE-2021-28211** (LZMA got a `>MAX_UI
 2021; Brotli never did). A variant sweep confirms Brotli is the **only** EDK2 decompressor that
 lacks both the truncation guard and an output bound.
 
+## Blast radius
+
+**NARROW.** Two independent surveys (GitHub code search across all public repos + binary GUID scan of
+200 shipping firmware images from LVFS) found **zero** platforms that actually use Brotli GUIDed
+sections. LZMA (the positive control) was present in 161/200 images. The vulnerable code ships in
+the EDK2 tree but is dead code in practice — a dormant vulnerability. See FINDINGS.md for details.
+
 ## Repository contents
 
 ```
-FINDINGS.md              Full write-up with line references and prior-art analysis
+FINDINGS.md              Full write-up with line references, prior-art, and blast-radius analysis
 evidence/
   BrotliDecompress.c     Vulnerable glue (BrotliDecompressInternal + GetInfo)
   GuidedSectionExtraction.c   GUIDed section handler that calls the glue
@@ -36,6 +43,8 @@ harness/
   asan_output.txt              ASAN output showing heap-buffer-overflow
   edk2_brotli_overflow_demo.c  End-to-end demo: controlled corruption of adjacent pool objects
   demo_output.txt              Demo output: function pointers hijacked, Secure Boot disabled
+  lvfs_brotli_scan.py          LVFS firmware binary scanner (Brotli vs LZMA GUID search)
+  lvfs_scan_output.txt         Scan results: 0/200 Brotli, 161/200 LZMA
 ```
 
 ## Disclosure

@@ -86,6 +86,55 @@ Stack trace: `memcpy → BrotliDecompressInternal → BrotliUefiDecompress`. See
   fix is to match LZMA/Tiano (bound output + add the MAX_UINT32 guard). The sweep did NOT expand blast
   radius (the ubiquitous Tiano path is safe), so B stays Brotli-specific and reachability-gated.
 
+## Blast radius (measured 2026-10-25)
+
+Finding B is reachability-gated: only firmware images that actually use Brotli-compressed GUIDed
+sections exercise the vulnerable code path. Two independent surveys measured adoption:
+
+### 1. GitHub code search (all of GitHub, not just tianocore/)
+
+| Query | Scope | Hits |
+|-------|-------|------|
+| `BrotliCustomDecompressLib` in `*.dsc` | all repos | **0 platform DSC files** — every hit is `MdeModulePkg/MdeModulePkg.dsc` (the library's own package definition) across various EDK2 mirrors/forks |
+| `gBrotliCustomDecompressGuid` in `*.fdf` | all repos | **0** — no Flash Description File references the Brotli GUID |
+| `BrotliCustomDecompressLib` in `*.dsc` | tianocore org | same: only MdeModulePkg.dsc |
+
+No public firmware platform DSC across all of GitHub builds BrotliCustomDecompressLib.
+
+### 2. LVFS firmware binary scan (shipping firmware images)
+
+Scanner: `harness/lvfs_brotli_scan.py`. Parses LVFS AppStream metadata (3,371 UEFI firmware entries),
+downloads cab files, extracts, and binary-searches for the Brotli and LZMA GUIDs (16-byte mixed-endian
+patterns). LZMA serves as positive control — virtually all UEFI firmware uses it.
+
+Scanned 200 firmware images (deduped by developer+name, capped at 100 MB each) from 9 vendors:
+Dell (167), Adlink (16), Acer (6), Asus (4), ASRock Industrial (3), libretrend (1), AAEON (1),
+AMD (1), CompuLab (1). Total downloaded: ~3.8 GB of cab files.
+
+| GUID | Hits | Rate |
+|------|------|------|
+| LZMA (`EE4E5898-…`) | **161 / 200** | 80.5% — confirms scanner works |
+| Brotli (`3D532050-…`) | **0 / 200** | **0%** |
+
+Full output: `harness/lvfs_scan_output.txt`.
+
+### Verdict
+
+**Blast radius is NARROW.** The vulnerable BrotliCustomDecompressLib code is present in the EDK2
+tree and builds as part of MdeModulePkg, but no platform DSC in public code and no shipping
+firmware image in the LVFS catalog actually uses it. Brotli GUIDed sections appear to be a
+dead feature — added in 2017 but never adopted by any IBV (AMI, Insyde, Phoenix) or OEM
+(Dell, HP, Lenovo, etc.) in their shipping builds.
+
+Caveats:
+- The LVFS sample is Dell-heavy (167/200). HP and Lenovo update through their own channels and are
+  under-represented. A broader sample would improve confidence.
+- IBV proprietary builds (AMI Aptio, Insyde H2O) are not fully visible in either public code or LVFS.
+  An IBV could theoretically use Brotli GUIDed sections in a custom build — but the zero signal
+  across both surveys makes this unlikely.
+- The vulnerability remains real and exploitable in principle. If Brotli adoption increases in future
+  EDK2 platforms (e.g. for better compression ratios), the bug becomes immediately reachable.
+
 ## Disclosure
 EDK2's documented security process (TianoCore Bugzilla security flag; confirm the current channel at
 submission). Coordinate a timeline; no public PoC before a fix.
