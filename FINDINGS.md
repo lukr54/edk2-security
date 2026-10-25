@@ -86,6 +86,50 @@ Stack trace: `memcpy → BrotliDecompressInternal → BrotliUefiDecompress`. See
   fix is to match LZMA/Tiano (bound output + add the MAX_UINT32 guard). The sweep did NOT expand blast
   radius (the ubiquitous Tiano path is safe), so B stays Brotli-specific and reachability-gated.
 
+### LZMA deep audit (2026-10-25)
+
+Full audit of the LZMA decompression path, checking whether bugs analogous to Finding B exist.
+
+**Components audited:**
+1. `LzmaDecompress.c` (EDK2 glue) — GetInfo and Decompress functions
+2. `LzmaDec.c` (vendored LZMA SDK 19.00, 2019-02-21) — output bounding, properties validation
+3. `F86GuidedSectionExtraction.c` + `Bra86.c` — x86 BCJ filter variant (`gLzmaF86CustomDecompressGuid`)
+4. `CoreSectionExtraction.c` — caller-side allocation flow
+5. `BaseUefiDecompressLib.c` — Tiano/UEFI decompressor (comparison baseline)
+
+**Verdict: LZMA is properly hardened. No novel bugs found.**
+
+Key checks and their results:
+
+| Check | Result |
+|-------|--------|
+| `MAX_UINT32` guard (the Brotli-missing guard) | PRESENT at `LzmaDecompress.c:149`: `if (DecodedSize > MAX_UINT32) return RETURN_UNSUPPORTED;` — the CVE-2021-28211 fix |
+| SDK output bounding | BOUNDED. `LzmaDec.c:901`: `if (p->dicPos >= dicLimit)` stops the decode loop. Match copy clamped at `:514`: `curLen = ((rem < len) ? (unsigned)rem : len)`. Dictionary writes never exceed `dicBufSize` |
+| LZMA properties validation | SOUND. `LzmaProps_Decode` rejects `d >= 9*5*5 = 225` → `SZ_ERROR_UNSUPPORTED`. Max lc=8, lp=4 → prob table ~6 MB; exceeds 64 KB scratch → `SzAlloc` returns NULL → `SZ_ERROR_MEM`, handled gracefully |
+| BCJ filter (x86_Convert) | SAFE. In-place post-processing on already-decompressed buffer using validated `OutputBufferSize`. No additional allocations, no out-of-bounds writes |
+| Tiano decompressor comparison | SAFE. Header stores native UINT32 (no truncation possible). Output bounded by `mOrigSize` checks at every write (lines 580/610/627) |
+| Known LZMA SDK vulns | NONE for SDK 19.00. No CVEs between the 2021 EDK2 fix and present |
+| `LzmaArchCustomDecompressLib` (BCJ variant) | Same `LzmaDecompress.c` core + post-processing BCJ filter. Inherits all LZMA guards |
+
+**TOCTOU double-read (informational, all three decompressors):**
+
+All three EDK2 decompressors share a code smell: `GetInfo` reads the decoded size from the section
+header, then `Decompress` re-reads it independently from the same mutable source. If the header is
+modified between calls, the decoder's output bound (`DecodedBufSize` / `mOrigSize`) could exceed
+the allocated buffer.
+
+| Decompressor | GetInfo reads | Decompress re-reads | Exploitability |
+|---|---|---|---|
+| LZMA | `LzmaDecompress.c:148` | `:200` `GetDecodedSizeOfBuf((UINT8*)Source)` | DMA/SMM required |
+| Brotli | `BrotliDecompress.c:230` | `:245` re-reads from same header | DMA/SMM required (but moot: the truncation bug is exploitable without TOCTOU) |
+| Tiano | `BaseUefiDecompressLib.c:701` | `:763` re-reads CompSize+OrigSize | DMA/SMM required |
+
+Exploiting any of these requires mutating flash-mapped memory between two calls in the same boot
+phase — feasible only with DMA from a rogue device (before VTd/IOMMU init) or an existing SMM
+exploit. Not practically exploitable without pre-existing high-privilege access. Severity:
+**informational**. The pattern is worth noting for defense-in-depth (a `const` copy taken once
+would eliminate it), but it does not constitute a finding worth disclosing on its own.
+
 ## Blast radius (measured 2026-10-25)
 
 Finding B is reachability-gated: only firmware images that actually use Brotli-compressed GUIDed
@@ -142,5 +186,5 @@ submission). Coordinate a timeline; no public PoC before a fix.
 ## Re-setup
 `git clone --depth 1 https://github.com/tianocore/edk2`
 Evidence copies in `evidence/`: `BrotliDecompress.c`, `GuidedSectionExtraction.c`,
-`BaseUefiDecompressLib.c` (the native Tiano decompress — read, appears hardened: `MakeTable` bounds
-checks present).
+`LzmaDecompress.c`, `F86GuidedSectionExtraction.c`,
+`BaseUefiDecompressLib.c` (the native Tiano decompress).

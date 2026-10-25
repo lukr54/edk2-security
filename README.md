@@ -23,6 +23,15 @@ This is the overlooked Brotli sibling of **CVE-2021-28211** (LZMA got a `>MAX_UI
 2021; Brotli never did). A variant sweep confirms Brotli is the **only** EDK2 decompressor that
 lacks both the truncation guard and an output bound.
 
+## LZMA deep audit (2026-10-25)
+
+Full audit of the LZMA path (`LzmaCustomDecompressLib` + `LzmaArchCustomDecompressLib` BCJ variant
++ vendored LZMA SDK 19.00). **No novel bugs found.** The CVE-2021-28211 fix (`MAX_UINT32` guard)
+is effective, the SDK output is properly bounded by `dicLimit`, properties validation is sound, and
+the BCJ filter is a safe in-place post-processing step. A TOCTOU double-read pattern exists in all
+three decompressors (GetInfo and Decompress independently read the decoded size from the same mutable
+header) but requires DMA/SMM to exploit — informational only. See FINDINGS.md for the full table.
+
 ## Blast radius
 
 **NARROW.** Two independent surveys (GitHub code search across all public repos + binary GUID scan of
@@ -38,6 +47,8 @@ evidence/
   BrotliDecompress.c     Vulnerable glue (BrotliDecompressInternal + GetInfo)
   GuidedSectionExtraction.c   GUIDed section handler that calls the glue
   BaseUefiDecompressLib.c     Tiano/UEFI decompress (safe — output-bounded; control)
+  LzmaDecompress.c            LZMA glue (safe — MAX_UINT32 guard + SDK bounded)
+  F86GuidedSectionExtraction.c  LZMA BCJ variant handler (safe — same core + in-place filter)
 harness/
   edk2_brotli_overflow_poc.c   ASAN proof-of-concept (sanitizer evidence)
   asan_output.txt              ASAN output showing heap-buffer-overflow
