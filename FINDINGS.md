@@ -1,8 +1,7 @@
 # EDK2 BrotliCustomDecompressLib — security findings
 
 Status (2026-10-25): **Finding A CONFIRMED** (n-day, DUP); **Finding B CONFIRMED** (novel,
-ASAN-proven heap-buffer-overflow). Defensive research, for coordinated disclosure to
-TianoCore/EDK2.
+ASAN-proven heap-buffer-overflow). Full public disclosure 2026-10-26.
 
 Target: `tianocore/edk2`, `MdeModulePkg/Library/BrotliCustomDecompressLib` + the MdePkg decompress
 libs. Why it matters: EDK2 is the open UEFI reference that AMI/Insyde/Phoenix build on;
@@ -180,8 +179,9 @@ Caveats:
   EDK2 platforms (e.g. for better compression ratios), the bug becomes immediately reachable.
 
 ## Disclosure
-EDK2's documented security process (TianoCore Bugzilla security flag; confirm the current channel at
-submission). Coordinate a timeline; no public PoC before a fix.
+Full public disclosure, 2026-10-26.  No coordinated disclosure period was given to TianoCore.
+The narrow blast radius (zero shipping firmware affected) and the fact that the sibling LZMA
+bug (CVE-2021-28211) has been public since 2021 informed this decision.
 
 ## Re-setup
 `git clone --depth 1 https://github.com/tianocore/edk2`
