@@ -105,4 +105,4 @@ fact that the sibling LZMA bug has been public since 2021 informed this decision
 
 ## Author
 
-Luc Music ([@lukr54](https://github.com/lukr54))
+[@lukr54](https://github.com/lukr54)
